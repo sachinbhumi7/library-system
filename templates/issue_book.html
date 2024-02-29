@@ -29,16 +29,16 @@
 			</thead>
 			<tbody>
 			  {% for issue_book in issue_books %}			  
-				  <tr>					
-					<td>{{issue_book.issuebookid}}</td>
-					<td>{{issue_book.book_name}}</td>
-					<td>{{issue_book.first_name}}</td>
-					<td>{{issue_book.issue_date_time}}</td>
-					<td>{{issue_book.expected_return_date}}</td>
-					<td>{{issue_book.return_date_time}}</td>
-					<td>{{issue_book.status}}</td>								
-					<td><a href="{{url_for('edit_issue_book', issuebookid=issue_book.issuebookid)}}" class="btn btn-primary">Edit</a></td>	
-					<td><a href="{{url_for('delete_issue_book', issuebookid=issue_book.issuebookid)}}" class="btn btn-danger">Delete</a></td>
+				  <tr>			
+					<td>{{issue_book[0]}}</td>
+					<td>{{issue_book[5]}}</td>
+					<td>{{issue_book[7]}}</td>
+					<td>{{issue_book[1]}}</td>
+					<td>{{issue_book[2]}}</td>
+					<td>{{issue_book[3]}}</td>
+					<td>{{issue_book[4]}}</td>								
+					<td><a href="{{url_for('edit_issue_book', issuebookid=issue_book[0])}}" class="btn btn-primary">Edit</a></td>	
+					<td><a href="{{url_for('delete_issue_book', issuebookid=issue_book[0])}}" class="btn btn-danger">Delete</a></td>
 				  </tr> 
 			{% endfor %}	  
 			</tbody>
@@ -62,7 +62,7 @@
 							<select name="book" id="book" class="form-control">
 								<option value="">Select</option>
 								{% for book in books %}
-									<option value="{{book.bookid}}">{{book.name}}</option>
+									<option value="{{book.bookid}}">{{book[1]}}</option>
 								{% endfor %}										
 							</select>
 						</div>	
@@ -72,7 +72,7 @@
 							<select name="users" id="users" class="form-control">
 								<option value="">Select</option>
 								{% for user in users %}
-									<option value="{{user.id}}">{{user.first_name}} {{user.last_name}}</option>
+									<option value="{{user.id}}">{{user[1]}}</option>
 								{% endfor %}								
 							</select>
 						</div>	

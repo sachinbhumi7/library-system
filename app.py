@@ -33,7 +33,7 @@ def login():
             session['userid'] = user[0]  # Assuming user ID is the first column
             session['email'] = user[1]  # Assuming email is the second column
             session['name'] = user[2]  # Assuming name is the third column
-            session['role'] = user[3]  # Assuming role is the fourth column
+            session['role'] = user[4]  # Assuming role is the fourth column
             message = 'Logged in successfully!'
             conn.close()
             return redirect(url_for('dashboard'))
@@ -65,21 +65,21 @@ def save_user():
     if 'loggedin' in session:        
         conn = get_db_connection()
         cursor = conn.cursor()
-        if request.method == 'POST' and 'role' in request.form and 'first_name' in request.form and 'last_name' in request.form and 'email' in request.form :
+        if request.method == 'POST' and 'role' in request.form and 'first_name' in request.form and 'email' in request.form :
             
             first_name = request.form['first_name']  
-            last_name = request.form['last_name'] 
             email = request.form['email']            
             role = request.form['role']             
             action = request.form['action']
             
             if action == 'updateUser':
                 userId = request.form['userid']                 
-                cursor.execute('UPDATE "user" SET first_name = %s, last_name = %s, email = %s, role = %s WHERE id = %s', (first_name, last_name, email, role, userId))
+                cursor.execute('UPDATE "user" SET name = %s, email = %s, role = %s WHERE id = %s', (first_name, email, role, userId))
                 conn.commit()   
             else:
                 password = request.form['password'] 
-                cursor.execute('INSERT INTO "user" (first_name, last_name, email, password, role) VALUES (%s, %s, %s, %s, %s)', (first_name, last_name, email, password, role))
+                print("hellooooo")
+                cursor.execute('INSERT INTO "user" (name, email, password, role) VALUES (%s, %s, %s, %s)', (first_name, email, password, role))
                 conn.commit()   
 
             cursor.close()
@@ -339,7 +339,7 @@ def list_issue_book():
         cursor.execute('''
             SELECT issued_book.issuebookid, issued_book.issue_date_time, issued_book.expected_return_date,  
             issued_book.return_date_time, issued_book.status, book.name AS book_name, book.isbn, 
-            "user".first_name, "user".last_name 
+            "user".name
             FROM issued_book 
             LEFT JOIN book ON book.bookid = issued_book.bookid 
             LEFT JOIN "user" ON "user".id = issued_book.userid
@@ -349,7 +349,7 @@ def list_issue_book():
         cursor.execute("SELECT bookid, name FROM book")
         books = cursor.fetchall()
 
-        cursor.execute("SELECT id, first_name, last_name FROM \"user\"")
+        cursor.execute("SELECT id, name FROM \"user\"")
         users = cursor.fetchall()
 
         cursor.close()
@@ -366,7 +366,7 @@ def save_issue_book():
         cursor.execute('''
             SELECT issued_book.issuebookid, issued_book.issue_date_time, issued_book.expected_return_date, 
             issued_book.return_date_time, issued_book.status, book.name AS book_name, book.isbn, 
-            "user".first_name, "user".last_name 
+            "user".name 
             FROM issued_book 
             LEFT JOIN book ON book.bookid = issued_book.bookid 
             LEFT JOIN "user" ON "user".id = issued_book.userid
@@ -415,7 +415,7 @@ def edit_issue_book():
         cursor.execute('''
             SELECT issued_book.issuebookid, issued_book.issue_date_time, issued_book.expected_return_date, 
             issued_book.return_date_time, issued_book.bookid, issued_book.userid, issued_book.status, 
-            book.name AS book_name, book.isbn, "user".first_name, "user".last_name 
+            book.name AS book_name, book.isbn, "user".name
             FROM issued_book 
             LEFT JOIN book ON book.bookid = issued_book.bookid 
             LEFT JOIN "user" ON "user".id = issued_book.userid 
@@ -426,7 +426,7 @@ def edit_issue_book():
         cursor.execute("SELECT bookid, name FROM book")
         books = cursor.fetchall()
 
-        cursor.execute("SELECT id, first_name, last_name FROM \"user\"")
+        cursor.execute("SELECT id, name FROM \"user\"")
         users = cursor.fetchall()
 
         cursor.close()

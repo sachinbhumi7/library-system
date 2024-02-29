@@ -17,7 +17,7 @@
                         <select name="book" id="book" class="form-control">
                             <option value="">Select</option>
                             {% for book in books %}
-                                <option value="{{book.bookid}}" {% if book.bookid == issueBook.bookid %}selected="selected" {% endif %}>{{book.name}}</option>
+                                <option value="{{book[0]}}" {% if book[0] == issueBook[4] %}selected="selected" {% endif %}>{{book[1]}}</option>
                             {% endfor %}										
                         </select>
                     </div>	
@@ -27,7 +27,7 @@
                         <select name="users" id="users" class="form-control">
                             <option value="">Select</option>
                             {% for user in users %}
-                                <option value="{{user.id}}" {% if user.id == issueBook.userid %}selected="selected" {% endif %}>{{user.first_name}} {{user.last_name}}</option>
+                                <option value="{{user[0]}}" {% if user[0] == issueBook[5] %}selected="selected" {% endif %}>{{user[1]}}</option>
                             {% endfor %}								
                         </select>
                     </div>	
@@ -35,13 +35,13 @@
                     
                     <div class="form-group">							
                         <label for="expected date" class="control-label">Expected Return Date</label>
-                        <input type="datetime-local" step="1" name="expected_return_date" id="expected_return_date" autocomplete="off" value="{{issueBook.expected_return_date}}" class="form-control"/>								
+                        <input type="datetime-local" step="1" name="expected_return_date" id="expected_return_date" autocomplete="off" value="{{issueBook[2]}}" class="form-control"/>								
                     </div>
                     
                     
                     <div class="form-group">							
                         <label for="expected date" class="control-label">Return Date</label>
-                        <input type="datetime-local" step="1" name="return_date" id="return_date" autocomplete="off" value="{{issueBook.return_date_time}}" class="form-control"/>								
+                        <input type="datetime-local" step="1" name="return_date" id="return_date" autocomplete="off" value="{{issueBook[3]}}" class="form-control"/>								
                     </div>
                     
                     
@@ -58,7 +58,7 @@
                                     
                 </div>
                 <div class="modal-footer">
-                    <input type="hidden" name="issueBookId" id="issueBookId" value="{{issueBook.issuebookid}}" />					
+                    <input type="hidden" name="issueBookId" id="issueBookId" value="{{issueBook[0]}}" />					
                     <input type="hidden" name="action" id="action" value="updateIssueBook" />
                     <input type="submit" name="save" id="save" class="btn btn-info" value="Save" />                    
                 </div>
